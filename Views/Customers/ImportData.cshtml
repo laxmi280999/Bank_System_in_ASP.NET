@@ -1,0 +1,60 @@
+﻿@model Bank.Models.Customer
+@{
+    ViewBag.Title = "ImportData";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h2>Import Customer Details</h2>
+
+<br />
+@using (Html.BeginForm("SaveToDB", "Customers"))
+{
+    <table class="table table-bordered">
+        <thead class="bg-primary">
+            <tr>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Birthdate</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in ViewBag.ListCustomers)
+            {
+                <tr>
+                    <td>
+                        @Html.LabelFor(c => c.Name, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Name, new { @Value = e.Name, @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.LabelFor(c => c.Gender, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Gender, new { @Value = e.Gender, @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.LabelFor(c => c.Birthdate, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Birthdate, "{0:dd/MM/yyyy}" ,new { @Value = @e.Birthdate, @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.LabelFor(c => c.Address, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Address, new { @Value = e.Address, @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.LabelFor(c => c.Phone, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Phone, new { @Value = e.Phone, @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.LabelFor(c => c.Email, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Email, new { @Value = e.Email, @class = "form-control" })
+                    </td>
+
+                    @Html.HiddenFor(c => c.Id)
+                    <td><button type="submit" class="btn btn-basic btn-block">Add</button></td>
+                </tr>
+                }
+        </tbody>
+    </table>
+}
+

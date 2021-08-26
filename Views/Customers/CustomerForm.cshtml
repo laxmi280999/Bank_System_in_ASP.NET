@@ -1,0 +1,139 @@
+﻿@model Bank.ViewModels.CustomerFormViewModel
+@{
+    ViewBag.Title = "Customer Form";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<br />
+
+@using (Html.BeginForm("Import", "Customers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.Raw(ViewBag.Error)
+    <div style="display:flex; align-items:center;justify-content:center">
+        <input type="file" class="form-control-file" name="excelfile" style="width: 218px;" />
+        <button type="submit" class="btn btn-sm">Import</button>
+    </div>
+}
+
+<p class="text-center"><strong>OR</strong></p>
+
+<h3 style="background-color: black; color: white; padding: 5px;">Personal Details</h3>
+
+<br />
+
+@using (Html.BeginForm("Save", "Customers"))
+{
+    <table class="table">
+        <tbody>
+            <tr>
+                <td><p class="p-table-data" style="font-size:17px"><strong>Name of Customer:</strong></p></td>
+                <td>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Customer.Name, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Customer.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.Customer.Name)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p class="p-table-data" style="font-size:17px"><strong>Gender :</strong></p></td>
+                <td>
+                    @*
+                        <div class="form-group">
+                            @Html.RadioButtonFor(c => c.Customer.Gender, "Male", false)@Html.LabelFor(c => c.Customer.Gender, "Male")
+                            @Html.RadioButtonFor(c => c.Customer.Gender, "Female", false)@Html.LabelFor(c => c.Customer.Gender, "Female")
+                        </div>
+                    *@
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Customer.Gender, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Customer.Gender, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.Customer.Gender)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p class="p-table-data" style="font-size:17px"><strong>Birth Date :</strong></p></td>
+                <td>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Customer.Birthdate, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Customer.Birthdate, "{0:d/MM/yyyy}", new { @class = "form-control", @placeholder = "DD-MM-YYYY" })
+                        @Html.ValidationMessageFor(c => c.Customer.Birthdate)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p class="p-table-data" style="font-size:17px"><strong>Address :</strong></p></td>
+                <td>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Customer.Address, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Customer.Address, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.Customer.Address)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p class="p-table-data" style="font-size:17px"><strong>Phone :</strong></p></td>
+                <td>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Customer.Phone, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Customer.Phone, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.Customer.Phone)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p class="p-table-data" style="font-size:17px"><strong>Email :</strong></p></td>
+                <td>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Customer.Email, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Customer.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.Customer.Email)
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 style="background-color:black; color: white;padding:5px;">Account Details</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Account Type</th>
+                <th>Account Number</th>
+                <th>Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Acount.AccountTypeId, new { @hidden = "hidden" })
+                        @Html.DropDownListFor(c => c.Acount.AccountTypeId, new SelectList(Model.AccountTypes, "Id", "Type"), "Select Account Type", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.Acount.AccountTypeId)
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Acount.AccountNumber, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Acount.AccountNumber, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.Acount.AccountNumber)
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Acount.Balance, new { @hidden = "hidden" })
+                        @Html.TextBoxFor(c => c.Acount.Balance, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.Acount.Balance)
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    @Html.HiddenFor(c => c.Customer.Id)
+    @Html.AntiForgeryToken()
+    <button class="btn btn-primary" id="btnsubmit" onclick="show()">Submit</button>
+}
+

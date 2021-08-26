@@ -1,0 +1,61 @@
+﻿@model Bank.ViewModels.CustomerViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<br />
+
+<div style="display: flex; justify-content: space-around;">
+    <div style="width: -webkit-fill-available; margin-right:10px;">
+        <h3 style="background-color:black; color: white; padding: 5px;">Personal Details</h3>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td><strong>Name :</strong></td>
+                    <td>@Model.Customer.Name</td>
+                </tr>
+                <tr>
+                    <td><strong>Gender :</strong></td>
+                    <td>@Model.Customer.Gender</td>
+                </tr>
+                <tr>
+                    <td><strong>Address :</strong></td>
+                    <td>@Model.Customer.Address</td>
+                </tr>
+                <tr>
+                    <td><strong>Phone :</strong></td>
+                    <td>@Model.Customer.Phone</td>
+                </tr>
+                <tr>
+                    <td><strong>Email :</strong></td>
+                    <td>@Model.Customer.Email</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+   
+    <br />
+
+    <div style="width: 32%;">
+        <h3 class="text-center" style="background-color:black; color: white; padding: 5px;">Acount Details</h3>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td>Account Number</td>
+                    <td>@Model.Acount.AccountNumber</td>
+                </tr>
+                <tr>
+                    <td>Account Type</td>
+                    <td>@Model.Acount.AccountType.Type</td>
+                </tr>
+                <tr>
+                    <th>Balance</th>
+                    <td><strong>$@Model.Acount.Balance</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

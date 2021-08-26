@@ -1,0 +1,57 @@
+﻿@model Bank.ViewModels.CustomerViewModel
+@{
+    ViewBag.Title = "DeleteCustomer";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h2>Are you sure you want to delete the following records ?</h2>
+
+<br />
+
+@using (Html.BeginForm("Delete", "Customers", new { id = Model.Customer.Id }))
+{
+
+    <table class="table table-bordered">
+        <thead class="bg-primary">
+            <tr>
+                <td>Name</td>
+                <td>Gender</td>
+                <td>Birthdate</td>
+                <td>Address</td>
+                <td>Phone</td>
+                <td>Email</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Customer.Name</td>
+                <td>@Model.Customer.Gender</td>
+                <td>@Model.Customer.Birthdate.ToString("dd-MM-yyyy")</td>
+                <td>@Model.Customer.Address</td>
+                <td>@Model.Customer.Phone</td>
+                <td>@Model.Customer.Email</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br />
+
+    <table class="table table-bordered">
+        <thead class="bg-primary">
+            <tr>
+                <td>Account Number</td>
+                <td>Account Type</td>
+                <td>Balance</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Acount.AccountNumber</td>
+                <td>@Model.Acount.AccountType.Type</td>
+                <td>@Model.Acount.Balance</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <input type="submit" class="btn btn-danger" style="float:right" value="Delete" />
+}

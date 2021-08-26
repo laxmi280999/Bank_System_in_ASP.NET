@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Bank.ViewModels.CustomerAndAccountDetailsViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<script src="~/Content/FileSaver.js"></script> @*could be downloaded from https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js*@
+<script>
+    function fnExcelReport(id, name) {
+        var tab_text = '<html xmlns: x="urn:schemas-microsoft-com:office:excel">';
+        tab_text = tab_text + '<head><xml><x: ExcelWorkbook><x: ExcelWorksheets><x: ExcelWorksheet>';
+        tab_text = tab_text + '<x: Name>Test Sheet</x: Name>';
+        tab_text = tab_text + '<x: WorksheetOptions><x: Panes></x: Panes></x: WorksheetOptions ></x: ExcelWorksheet > ';
+        tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
+        tab_text = tab_text + "<table border='1px' style='color:black'>";
+
+
+        var exportTable = $('#' + id).clone();
+
+        exportTable.find('.remove').remove();
+
+        tab_text = tab_text + exportTable.html();
+        tab_text = tab_text + '</table></body></html>';
+        var fileName = "Demo" + '.xls';
+
+        //Save the file
+        var blob = new Blob([tab_text], { type: "application/vnd.ms-excel;charset=utf-8" })
+        window.saveAs(blob, fileName);
+    }
+</script>
+
+<h2>List of Customers</h2>
+
+
+@if (!Model.Any())
+{
+    <br />
+
+    <h4 class="text-center"><i>We don't have any customers yet.</i></h4>
+}
+
+else
+{
+
+    <div style="display: flex; align-items: center; justify-content: flex-end;">
+        <button class="btn btn-danger btn-sm" onclick="javascript: fnExcelReport('dataTable','data')">Export to Excel</button>
+    </div>
+
+    <br />
+
+    <table class="table table-hover" id="dataTable">
+        <thead class="bg-primary">
+            <tr>
+                <th>Customer Name</th>
+                <th>Gender</th>
+                <th>Birthdate</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th hidden>Acc. Type</th>
+                <th hidden>Acc. No.</th>
+                <th hidden>Balance</th>
+                <th class="remove">View</th>
+                <th class="remove">Edit</th>
+                <th class="remove">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cust in Model)
+            {
+                <tr>
+                    <td>@cust.Customers.Name</td>
+                    <td>@cust.Customers.Gender</td>
+                    <td>@cust.Customers.Birthdate.ToString("d")</td>
+                    <td>@cust.Customers.Address</td>
+                    <td>@cust.Customers.Phone</td>
+                    <td>@cust.Customers.Email</td>
+                    <td hidden>@cust.AccountType.Type</td>
+                    <td hidden>'@cust.Acounts.AccountNumber</td>
+                    <td hidden>@cust.Acounts.Balance</td>
+                    <td class="remove">@Html.ActionLink("View", "Details", "Customers", new { id = cust.Customers.Id }, htmlAttributes: null)</td>
+                    <td class="remove">@Html.ActionLink("Edit", "Edit", "Customers", new { id = cust.Customers.Id }, htmlAttributes: null)</td>
+                    <td class="remove">@Html.ActionLink("Delete", "DeleteCustomer", "Customers", new { id = cust.Customers.Id }, htmlAttributes: null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@*
+        @{
+        if (TempData["message"] != null)
+        {
+            <script type="text/javascript">
+            alert(@Html.Raw(Json.Encode(TempData["message"])));
+            </script>
+        }
+    }
+
+*@
+
+
